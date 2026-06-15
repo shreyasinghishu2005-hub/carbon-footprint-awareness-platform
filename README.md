@@ -15,9 +15,21 @@ GreenPulse is a self-contained carbon footprint awareness platform prototype. It
 - Community leaderboard
 - Saved snapshot reports
 
+## Pages
+
+- `home.html` - landing page and quick navigation
+- `calculator.html` - emissions calculator and tips
+- `dashboard.html` - score, charts, and ranking
+- `goals.html` - goals, badges, and journal
+- `learn.html` - awareness content and quiz
+- `community.html` - community feed and leaderboard
+- `reports.html` - snapshots, exports, and forecasts
+
+`index.html` now redirects to `home.html`, so the app still opens cleanly from the root.
+
 ## Run it
 
-Open `index.html` directly in a browser, or serve the folder with any static server.
+Open `home.html` directly in a browser, or serve the folder with any static server.
 
 ## Run with Node
 

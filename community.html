@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#06121d" />
+    <title>GreenPulse | Community</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="ambient ambient-a" aria-hidden="true"></div>
+    <div class="ambient ambient-b" aria-hidden="true"></div>
+    <div class="ambient ambient-c" aria-hidden="true"></div>
+
+    <header class="topbar">
+      <div class="brand" aria-label="GreenPulse home">
+        <div class="brand-mark">GP</div>
+        <div>
+          <p>GreenPulse</p>
+          <span>Carbon Footprint Awareness Platform</span>
+        </div>
+      </div>
+
+      <nav class="topnav" aria-label="Primary">
+        <a href="home.html">Home</a>
+        <a href="calculator.html">Calculator</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="goals.html">Goals</a>
+        <a href="learn.html">Learn</a>
+        <a class="is-active" href="community.html">Community</a>
+        <a href="reports.html">Reports</a>
+      </nav>
+
+      <button class="button button--ghost" id="saveSnapshot" type="button">Save snapshot</button>
+    </header>
+
+    <main class="app">
+      <section class="hero panel">
+        <div class="hero-copy">
+          <p class="eyebrow">Community page</p>
+          <h1>Make progress visible with friendly competition.</h1>
+          <p class="hero-text">
+            A shared leaderboard and a sample social feed make the platform feel active, social, and easy to
+            present in a demo.
+          </p>
+
+          <div class="hero-actions">
+            <a class="button" href="dashboard.html">See dashboard</a>
+            <a class="button button--ghost" href="reports.html">Open reports</a>
+          </div>
+        </div>
+
+        <aside class="hero-card" aria-label="Today summary">
+          <div class="hero-card__header">
+            <span>Today</span>
+            <strong>Snapshot</strong>
+          </div>
+          <div class="hero-card__stats">
+            <div>
+              <span>Monthly footprint</span>
+              <strong data-hero-stat="total">--</strong>
+            </div>
+            <div>
+              <span>Eco score</span>
+              <strong data-hero-stat="score">--</strong>
+            </div>
+            <div>
+              <span>Biggest lever</span>
+              <strong data-hero-stat="lever">--</strong>
+            </div>
+            <div>
+              <span>Potential savings</span>
+              <strong data-hero-stat="savings">--</strong>
+            </div>
+          </div>
+          <p class="hero-card__note" data-hero-stat="target">--</p>
+        </aside>
+      </section>
+
+      <section class="panel" id="communitySummary">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">Leaderboard</p>
+            <h2>Compare your score with the cohort.</h2>
+          </div>
+          <p class="section-note">Anonymous sample profiles keep the leaderboard lightweight for a demo.</p>
+        </div>
+
+        <div class="leaderboard-summary">
+          <div>
+            <span>Your rank</span>
+            <strong data-community="rank">--</strong>
+          </div>
+          <div>
+            <span>Community average</span>
+            <strong data-community="average">--</strong>
+          </div>
+        </div>
+        <div class="leaderboard-list" id="leaderboardList"></div>
+      </section>
+
+      <section class="panel">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">Community feed</p>
+            <h2>Sample posts that make the product feel alive.</h2>
+          </div>
+          <p class="section-note">These cards are static for the prototype but easy to replace with real posts later.</p>
+        </div>
+
+        <div class="community-feed">
+          <article class="community-post">
+            <span class="content-tag">Campus</span>
+            <h3>Student challenge week</h3>
+            <p>Three teams are competing to cut commute emissions with bus passes and bike rides.</p>
+            <div class="community-post__meta">
+              <span class="pill">18 posts</span>
+              <span class="pill">24 likes</span>
+            </div>
+          </article>
+          <article class="community-post">
+            <span class="content-tag">Household</span>
+            <h3>Energy-saving tip swap</h3>
+            <p>Members shared their favorite low-cost ways to lower electricity use and save money.</p>
+            <div class="community-post__meta">
+              <span class="pill">12 replies</span>
+              <span class="pill">Weekly thread</span>
+            </div>
+          </article>
+          <article class="community-post">
+            <span class="content-tag">Action</span>
+            <h3>Plant-forward lunch club</h3>
+            <p>Reusable containers and easier plant-based meals are the current community win.</p>
+            <div class="community-post__meta">
+              <span class="pill">4 groups</span>
+              <span class="pill">Featured</span>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script type="module" src="app.js"></script>
+  </body>
+</html>

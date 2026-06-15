@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#06121d" />
+    <title>GreenPulse | Learn</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="ambient ambient-a" aria-hidden="true"></div>
+    <div class="ambient ambient-b" aria-hidden="true"></div>
+    <div class="ambient ambient-c" aria-hidden="true"></div>
+
+    <header class="topbar">
+      <div class="brand" aria-label="GreenPulse home">
+        <div class="brand-mark">GP</div>
+        <div>
+          <p>GreenPulse</p>
+          <span>Carbon Footprint Awareness Platform</span>
+        </div>
+      </div>
+
+      <nav class="topnav" aria-label="Primary">
+        <a href="home.html">Home</a>
+        <a href="calculator.html">Calculator</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="goals.html">Goals</a>
+        <a class="is-active" href="learn.html">Learn</a>
+        <a href="community.html">Community</a>
+        <a href="reports.html">Reports</a>
+      </nav>
+
+      <button class="button button--ghost" id="saveSnapshot" type="button">Save snapshot</button>
+    </header>
+
+    <main class="app">
+      <section class="hero panel">
+        <div class="hero-copy">
+          <p class="eyebrow">Learning hub</p>
+          <h1>Make the climate story easy to understand.</h1>
+          <p class="hero-text">
+            Use short reads, visual cards, and a quick quiz to build confidence around carbon emissions and
+            sustainable living.
+          </p>
+
+          <div class="hero-actions">
+            <a class="button" href="calculator.html">Try calculator</a>
+            <a class="button button--ghost" href="community.html">See community</a>
+          </div>
+        </div>
+
+        <aside class="hero-card" aria-label="Today summary">
+          <div class="hero-card__header">
+            <span>Today</span>
+            <strong>Snapshot</strong>
+          </div>
+          <div class="hero-card__stats">
+            <div>
+              <span>Monthly footprint</span>
+              <strong data-hero-stat="total">--</strong>
+            </div>
+            <div>
+              <span>Eco score</span>
+              <strong data-hero-stat="score">--</strong>
+            </div>
+            <div>
+              <span>Biggest lever</span>
+              <strong data-hero-stat="lever">--</strong>
+            </div>
+            <div>
+              <span>Potential savings</span>
+              <strong data-hero-stat="savings">--</strong>
+            </div>
+          </div>
+          <p class="hero-card__note" data-hero-stat="target">--</p>
+        </aside>
+      </section>
+
+      <section class="panel">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">Awareness content</p>
+            <h2>Learn the why behind the numbers.</h2>
+          </div>
+          <p class="section-note">Use articles, a micro-quiz, and short reads to keep climate literacy moving.</p>
+        </div>
+
+        <div class="content-grid">
+          <article class="content-card">
+            <span class="content-tag">Article</span>
+            <h3>Carbon 101</h3>
+            <p>Learn the difference between direct emissions, household energy, and lifestyle choices.</p>
+          </article>
+          <article class="content-card">
+            <span class="content-tag">Article</span>
+            <h3>Food and land use</h3>
+            <p>See how meal choices influence emissions and what lower-carbon plates look like.</p>
+          </article>
+          <article class="content-card">
+            <span class="content-tag">Video</span>
+            <h3>Five-minute climate swaps</h3>
+            <p>Short, practical habits that can make the biggest difference without a lifestyle overhaul.</p>
+          </article>
+          <article class="content-card quiz-card">
+            <span class="content-tag">Quiz</span>
+            <h3>Which action usually saves the most emissions?</h3>
+            <div class="quiz-options" id="quizOptions"></div>
+            <p class="quiz-result" id="quizResult">Pick an option to test your intuition.</p>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script type="module" src="app.js"></script>
+  </body>
+</html>

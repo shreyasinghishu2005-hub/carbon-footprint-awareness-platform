@@ -221,6 +221,10 @@ function formatPercent(value) {
 }
 
 function readInputs() {
+  if (!refs.form) {
+    return cloneValue(state.inputs);
+  }
+
   const inputs = {};
   for (const [key, config] of Object.entries(inputConfig)) {
     const element = refs.form.querySelector(`[data-input="${key}"]`);
@@ -234,6 +238,10 @@ function readInputs() {
 }
 
 function applyInputs(inputs) {
+  if (!refs.form) {
+    return;
+  }
+
   for (const [key, value] of Object.entries(inputs)) {
     const element = refs.form.querySelector(`[data-input="${key}"]`);
     if (element) {
@@ -244,6 +252,10 @@ function applyInputs(inputs) {
 }
 
 function updateInputLabels(inputs) {
+  if (!refs.form) {
+    return;
+  }
+
   for (const [key, value] of Object.entries(inputs)) {
     const label = refs.form.querySelector(`[data-value-for="${key}"]`);
     if (!label) {
@@ -611,9 +623,11 @@ function downloadCertificate(result) {
 }
 
 function render() {
-  const inputs = readInputs();
-  state.inputs = inputs;
-  saveJson(STORAGE_KEYS.settings, inputs);
+  const inputs = refs.form ? readInputs() : state.inputs;
+  if (refs.form) {
+    state.inputs = inputs;
+    saveJson(STORAGE_KEYS.settings, inputs);
+  }
 
   const result = calculateFootprint(inputs);
 
@@ -633,6 +647,10 @@ function render() {
 }
 
 function renderCommandCenter(result) {
+  if (!refs.commandCenter) {
+    return;
+  }
+
   renderAssistant(result);
   renderAlerts(result);
   renderMarketplace(result);
@@ -641,6 +659,10 @@ function renderCommandCenter(result) {
 }
 
 function renderAssistant(result) {
+  if (!refs.assistantScore || !refs.assistantSummary || !refs.assistantPlan) {
+    return;
+  }
+
   const assistant = buildAssistant(result);
   refs.assistantScore.textContent = assistant.scoreLabel;
   refs.assistantSummary.textContent = assistant.summary;
@@ -658,6 +680,10 @@ function renderAssistant(result) {
 }
 
 function renderAlerts(result) {
+  if (!refs.alertList) {
+    return;
+  }
+
   const alerts = buildAlerts(result);
   refs.alertList.innerHTML = alerts
     .map(
@@ -672,6 +698,10 @@ function renderAlerts(result) {
 }
 
 function renderMarketplace(result) {
+  if (!refs.marketList) {
+    return;
+  }
+
   const topRecommendation = result.recommendations[0];
   refs.marketList.innerHTML = OFFSET_OFFERS.map((offer, index) => {
     const isPrimary = index === 0;
@@ -693,6 +723,10 @@ function renderMarketplace(result) {
 }
 
 function renderLocations(result) {
+  if (!refs.locationList) {
+    return;
+  }
+
   const locations = buildLocations(result);
   refs.locationList.innerHTML = locations
     .map(
@@ -710,6 +744,10 @@ function renderLocations(result) {
 }
 
 function renderJournal(result) {
+  if (!refs.journalList || !refs.journalSummary) {
+    return;
+  }
+
   const saved = state.journal.reduce((sum, entry) => sum + (Number(entry.impact) || 0), 0);
   refs.journalSummary.textContent = `${state.journal.length} logs · ${formatShortCarbon(saved)} saved`;
 
@@ -779,6 +817,10 @@ function updateMetrics(result) {
 }
 
 function renderBreakdown(result) {
+  if (!refs.breakdownBars || !refs.breakdownTop) {
+    return;
+  }
+
   const entries = Object.entries(result.breakdown).sort((left, right) => right[1] - left[1]);
   const topCategory = entries[0]?.[0] ?? "commute";
   refs.breakdownTop.textContent = formatCategory(topCategory);
@@ -803,6 +845,10 @@ function renderBreakdown(result) {
 }
 
 function renderTrend(result) {
+  if (!refs.trendChart) {
+    return;
+  }
+
   const liveHistory = state.history.slice(-5).map((entry) => entry.total);
   const values = liveHistory.length >= 2 ? [...liveHistory, result.total] : syntheticTrend(result.total);
   const labels =
@@ -858,7 +904,7 @@ function buildTrendSvg(values, labels) {
     .map(
       (point) => `
         <circle cx="${point.x}" cy="${point.y}" r="4.8" />
-        <circle cx="${point.x}" cy="${point.y}" r="9" fill="rgba(155, 217, 106, 0.12)" />
+        <circle cx="${point.x}" cy="${point.y}" r="9" fill="rgba(86, 211, 255, 0.12)" />
       `,
     )
     .join("");
@@ -879,12 +925,12 @@ function buildTrendSvg(values, labels) {
   return `
     <defs>
       <linearGradient id="trendStroke" x1="0" x2="1" y1="0" y2="0">
-        <stop offset="0%" stop-color="#9bd96a" />
-        <stop offset="100%" stop-color="#5ccf8a" />
+        <stop offset="0%" stop-color="#56d3ff" />
+        <stop offset="100%" stop-color="#7b90ff" />
       </linearGradient>
       <linearGradient id="trendFill" x1="0" x2="0" y1="0" y2="1">
-        <stop offset="0%" stop-color="#9bd96a" stop-opacity="0.34" />
-        <stop offset="100%" stop-color="#9bd96a" stop-opacity="0.02" />
+        <stop offset="0%" stop-color="#56d3ff" stop-opacity="0.34" />
+        <stop offset="100%" stop-color="#56d3ff" stop-opacity="0.02" />
       </linearGradient>
     </defs>
     <g class="trend-grid" opacity="0.8">
@@ -892,7 +938,7 @@ function buildTrendSvg(values, labels) {
     </g>
     <path d="${areaPath}" fill="url(#trendFill)" />
     <path d="${linePath}" fill="none" stroke="url(#trendStroke)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-    <g class="trend-points" fill="#eaffdc" stroke="#0b150f" stroke-width="2">
+    <g class="trend-points" fill="#eef8ff" stroke="#06121d" stroke-width="2">
       ${pointDots}
     </g>
     <g class="trend-labels" fill="#b2c5b6">
@@ -903,6 +949,10 @@ function buildTrendSvg(values, labels) {
 }
 
 function renderGoals(result) {
+  if (!refs.goalGrid) {
+    return;
+  }
+
   refs.goalGrid.innerHTML = result.goals
     .map((goal) => {
       const progress = clamp(goal.progress, 0, 100);
@@ -928,6 +978,10 @@ function renderGoals(result) {
 }
 
 function renderBadges(result) {
+  if (!refs.badgeStrip || !refs.badgeHint) {
+    return;
+  }
+
   const activeBadges = result.badges.filter((badge) => badge.active);
   const pendingBadge = result.badges.find((badge) => !badge.active);
 
@@ -951,6 +1005,10 @@ function renderBadges(result) {
 }
 
 function renderRecommendations(result) {
+  if (!refs.recommendationList) {
+    return;
+  }
+
   refs.recommendationList.innerHTML = result.recommendations
     .map(
       (item) => `
@@ -967,6 +1025,10 @@ function renderRecommendations(result) {
 }
 
 function renderLeaderboard(result) {
+  if (!refs.leaderboardList || !refs.communityRank || !refs.communityAverage) {
+    return;
+  }
+
   const user = {
     name: "You",
     score: result.score,
@@ -998,6 +1060,10 @@ function renderLeaderboard(result) {
 }
 
 function renderSnapshots(result) {
+  if (!refs.snapshotList) {
+    return;
+  }
+
   const snapshots = [...state.history].slice(-6).reverse();
 
   if (snapshots.length === 0) {
@@ -1029,6 +1095,10 @@ function renderSnapshots(result) {
 }
 
 function updateForecast(result) {
+  if (!refs.forecastValues || refs.forecastValues.length === 0) {
+    return;
+  }
+
   const savings = result.recommendations.reduce((sum, item) => sum + item.savings, 0);
   const cappedSavings = Math.min(savings, result.total * 0.45);
   const yearly = cappedSavings * 12;
@@ -1048,10 +1118,18 @@ function updateForecast(result) {
 }
 
 function updateCommunitySummary(result) {
+  if (!refs.trendLabel) {
+    return;
+  }
+
   refs.trendLabel.textContent = `${formatShortCarbon(result.total)} live`;
 }
 
 function showToast(message) {
+  if (!refs.toast) {
+    return;
+  }
+
   refs.toast.textContent = message;
   refs.toast.classList.add("is-visible");
   clearTimeout(toastTimer);
@@ -1128,44 +1206,58 @@ function formatCategory(category) {
 }
 
 function attachEvents() {
-  refs.form.addEventListener("input", render);
-  refs.saveSnapshot.addEventListener("click", saveSnapshot);
-  refs.resetDemo.addEventListener("click", resetDemo);
-  refs.exportReport.addEventListener("click", () => {
-    const current = calculateFootprint(readInputs());
-    downloadReport(current);
-    showToast("Report exported.");
-  });
+  if (refs.form) {
+    refs.form.addEventListener("input", render);
+  }
 
-  refs.commandCenter.addEventListener("click", (event) => {
-    const commandButton = event.target.closest("[data-command]");
-    if (commandButton) {
+  if (refs.saveSnapshot) {
+    refs.saveSnapshot.addEventListener("click", saveSnapshot);
+  }
+
+  if (refs.resetDemo) {
+    refs.resetDemo.addEventListener("click", resetDemo);
+  }
+
+  if (refs.exportReport) {
+    refs.exportReport.addEventListener("click", () => {
       const current = calculateFootprint(readInputs());
-      if (commandButton.dataset.command === "plan") {
-        saveWeeklyPlan(current);
-      } else if (commandButton.dataset.command === "certificate") {
-        downloadCertificate(current);
-        showToast("Certificate downloaded.");
+      downloadReport(current);
+      showToast("Report exported.");
+    });
+  }
+
+  if (refs.commandCenter) {
+    refs.commandCenter.addEventListener("click", (event) => {
+      const commandButton = event.target.closest("[data-command]");
+      if (commandButton) {
+        const current = calculateFootprint(readInputs());
+        if (commandButton.dataset.command === "plan") {
+          saveWeeklyPlan(current);
+        } else if (commandButton.dataset.command === "certificate") {
+          downloadCertificate(current);
+          showToast("Certificate downloaded.");
+        }
+        return;
       }
-      return;
-    }
 
-    const journalButton = event.target.closest("[data-journal]");
-    if (journalButton) {
-      addJournalEntry(journalButton.dataset.journal);
-      return;
-    }
+      const journalButton = event.target.closest("[data-journal]");
+      if (journalButton) {
+        addJournalEntry(journalButton.dataset.journal);
+        return;
+      }
 
-    const marketButton = event.target.closest("[data-market]");
-    if (marketButton) {
-      showToast(`${marketButton.dataset.market} opened for support.`);
-    }
-  });
+      const marketButton = event.target.closest("[data-market]");
+      if (marketButton) {
+        showToast(`${marketButton.dataset.market} opened for support.`);
+      }
+    });
+  }
 
-  refs.quizOptions.addEventListener("click", (event) => {
-    const button = event.target.closest("button[data-correct]");
-    if (!button) {
-      return;
+  if (refs.quizOptions) {
+    refs.quizOptions.addEventListener("click", (event) => {
+      const button = event.target.closest("button[data-correct]");
+      if (!button) {
+        return;
     }
 
     const selected = button.dataset.correct === "true";
@@ -1178,11 +1270,16 @@ function attachEvents() {
       }
     });
 
-    refs.quizResult.textContent = selected ? answer.response : `${answer.response} Try again to spot the bigger climate win.`;
-  });
+      refs.quizResult.textContent = selected ? answer.response : `${answer.response} Try again to spot the bigger climate win.`;
+    });
+  }
 }
 
 function initQuiz() {
+  if (!refs.quizOptions || !refs.quizResult) {
+    return;
+  }
+
   refs.quizOptions.innerHTML = QUIZ.answers
     .map(
       (answer, index) => `
@@ -1196,6 +1293,10 @@ function initQuiz() {
 }
 
 function seedInputs() {
+  if (!refs.form) {
+    return;
+  }
+
   applyInputs(state.inputs);
 }
 

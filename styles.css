@@ -182,6 +182,11 @@ button {
   outline: none;
 }
 
+.topnav a.is-active {
+  background: rgba(255, 255, 255, 0.09);
+  color: var(--text);
+}
+
 .app {
   width: min(100% - 1.5rem, var(--max-width));
   margin: 0 auto;
@@ -377,6 +382,60 @@ button {
 .hero-card__note {
   margin: 0;
   line-height: 1.55;
+}
+
+.module-grid,
+.community-feed {
+  display: grid;
+  gap: 1rem;
+  padding: 0 1.25rem 1.25rem;
+}
+
+.module-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.module-card,
+.community-post {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1rem;
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.module-card h3,
+.community-post h3 {
+  margin: 0;
+  font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  font-size: 1.1rem;
+}
+
+.module-card p,
+.community-post p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.module-card__meta,
+.community-post__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.module-card__actions,
+.page-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+.module-card__link {
+  align-self: flex-start;
 }
 
 .workspace,
@@ -1201,6 +1260,7 @@ footer {
   .hero,
   .workspace,
   .stacked,
+  .module-grid,
   .command-grid,
   .chart-grid,
   .reports-grid,
@@ -1243,6 +1303,7 @@ footer {
 
   .hero,
   .panel > .section-head,
+  .module-grid,
   .calculator,
   .command-grid,
   .metric-grid,

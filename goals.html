@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#06121d" />
+    <title>GreenPulse | Goals</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="ambient ambient-a" aria-hidden="true"></div>
+    <div class="ambient ambient-b" aria-hidden="true"></div>
+    <div class="ambient ambient-c" aria-hidden="true"></div>
+
+    <header class="topbar">
+      <div class="brand" aria-label="GreenPulse home">
+        <div class="brand-mark">GP</div>
+        <div>
+          <p>GreenPulse</p>
+          <span>Carbon Footprint Awareness Platform</span>
+        </div>
+      </div>
+
+      <nav class="topnav" aria-label="Primary">
+        <a href="home.html">Home</a>
+        <a href="calculator.html">Calculator</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a class="is-active" href="goals.html">Goals</a>
+        <a href="learn.html">Learn</a>
+        <a href="community.html">Community</a>
+        <a href="reports.html">Reports</a>
+      </nav>
+
+      <button class="button button--ghost" id="saveSnapshot" type="button">Save snapshot</button>
+    </header>
+
+    <main class="app">
+      <section class="hero panel">
+        <div class="hero-copy">
+          <p class="eyebrow">Goals page</p>
+          <h1>Turn sustainability into streaks, badges, and small wins.</h1>
+          <p class="hero-text">
+            Use this page to stay consistent, build good habits, and keep a visible record of progress with
+            challenges and journal entries.
+          </p>
+
+          <div class="hero-actions">
+            <a class="button" href="community.html">See community</a>
+            <a class="button button--ghost" href="reports.html">Open reports</a>
+          </div>
+        </div>
+
+        <aside class="hero-card" aria-label="Today summary">
+          <div class="hero-card__header">
+            <span>Today</span>
+            <strong>Snapshot</strong>
+          </div>
+          <div class="hero-card__stats">
+            <div>
+              <span>Monthly footprint</span>
+              <strong data-hero-stat="total">--</strong>
+            </div>
+            <div>
+              <span>Eco score</span>
+              <strong data-hero-stat="score">--</strong>
+            </div>
+            <div>
+              <span>Biggest lever</span>
+              <strong data-hero-stat="lever">--</strong>
+            </div>
+            <div>
+              <span>Potential savings</span>
+              <strong data-hero-stat="savings">--</strong>
+            </div>
+          </div>
+          <p class="hero-card__note" data-hero-stat="target">--</p>
+        </aside>
+      </section>
+
+      <section class="panel" id="goals">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">Challenges and goals</p>
+            <h2>Small challenges that unlock real climate wins.</h2>
+          </div>
+          <p class="section-note">Progress is based on your current settings, and badges unlock when targets are reached.</p>
+        </div>
+
+        <div class="goal-grid" id="goalGrid"></div>
+        <div class="badge-strip" id="badgeStrip"></div>
+        <p class="muted-note" id="badgeHint"></p>
+      </section>
+
+      <section class="panel" id="commandCenter">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">Daily eco journal</p>
+            <h2>Capture one small win at a time.</h2>
+          </div>
+          <p class="section-note">The journal keeps your positive actions visible and easy to share later.</p>
+        </div>
+
+        <div class="command-grid">
+          <article class="command-card command-card--journal">
+            <div class="command-card__head">
+              <div>
+                <p class="command-label">Daily eco journal</p>
+                <h3>Track the habit loop</h3>
+              </div>
+              <span class="status-chip" id="journalSummary">--</span>
+            </div>
+            <div class="journal-actions">
+              <button class="journal-chip" type="button" data-journal="walk">Log a walk</button>
+              <button class="journal-chip" type="button" data-journal="bike">Log a bike ride</button>
+              <button class="journal-chip" type="button" data-journal="plant">Log plant meal</button>
+              <button class="journal-chip" type="button" data-journal="save">Log energy saved</button>
+            </div>
+            <div class="journal-list" id="journalList"></div>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script type="module" src="app.js"></script>
+  </body>
+</html>

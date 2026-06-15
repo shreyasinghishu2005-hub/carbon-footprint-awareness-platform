@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#06121d" />
+    <title>GreenPulse | Dashboard</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="ambient ambient-a" aria-hidden="true"></div>
+    <div class="ambient ambient-b" aria-hidden="true"></div>
+    <div class="ambient ambient-c" aria-hidden="true"></div>
+
+    <header class="topbar">
+      <div class="brand" aria-label="GreenPulse home">
+        <div class="brand-mark">GP</div>
+        <div>
+          <p>GreenPulse</p>
+          <span>Carbon Footprint Awareness Platform</span>
+        </div>
+      </div>
+
+      <nav class="topnav" aria-label="Primary">
+        <a href="home.html">Home</a>
+        <a href="calculator.html">Calculator</a>
+        <a class="is-active" href="dashboard.html">Dashboard</a>
+        <a href="goals.html">Goals</a>
+        <a href="learn.html">Learn</a>
+        <a href="community.html">Community</a>
+        <a href="reports.html">Reports</a>
+      </nav>
+
+      <button class="button button--ghost" id="saveSnapshot" type="button">Save snapshot</button>
+    </header>
+
+    <main class="app">
+      <section class="hero panel">
+        <div class="hero-copy">
+          <p class="eyebrow">Dashboard page</p>
+          <h1>See the footprint story in one screen.</h1>
+          <p class="hero-text">
+            This dashboard pulls together totals, trends, and category breakdowns so you can see what changed
+            and where the biggest opportunity sits.
+          </p>
+
+          <div class="hero-actions">
+            <a class="button" href="reports.html">Open reports</a>
+            <a class="button button--ghost" href="goals.html">See goals</a>
+          </div>
+        </div>
+
+        <aside class="hero-card" aria-label="Today summary">
+          <div class="hero-card__header">
+            <span>Today</span>
+            <strong>Snapshot</strong>
+          </div>
+          <div class="hero-card__stats">
+            <div>
+              <span>Monthly footprint</span>
+              <strong data-hero-stat="total">--</strong>
+            </div>
+            <div>
+              <span>Eco score</span>
+              <strong data-hero-stat="score">--</strong>
+            </div>
+            <div>
+              <span>Biggest lever</span>
+              <strong data-hero-stat="lever">--</strong>
+            </div>
+            <div>
+              <span>Potential savings</span>
+              <strong data-hero-stat="savings">--</strong>
+            </div>
+          </div>
+          <p class="hero-card__note" data-hero-stat="target">--</p>
+        </aside>
+      </section>
+
+      <section class="panel" id="dashboard">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">Personal dashboard</p>
+            <h2>Your emissions breakdown, score, and trend.</h2>
+          </div>
+          <p class="section-note">The dashboard updates instantly and can be saved to track progress over time.</p>
+        </div>
+
+        <div class="metric-grid">
+          <div class="metric-card">
+            <span>Monthly CO2e</span>
+            <strong data-metric="monthly">--</strong>
+            <small>Estimated footprint for the current settings.</small>
+          </div>
+          <div class="metric-card">
+            <span>Weekly average</span>
+            <strong data-metric="weekly">--</strong>
+            <small>Useful for checking habits week to week.</small>
+          </div>
+          <div class="metric-card">
+            <span>Eco score</span>
+            <strong data-metric="score">--</strong>
+            <small>Higher scores reflect lower carbon intensity.</small>
+          </div>
+          <div class="metric-card">
+            <span>Annual offset need</span>
+            <strong data-metric="offset">--</strong>
+            <small>Tree equivalent to neutralize one year of emissions.</small>
+          </div>
+        </div>
+
+        <div class="chart-grid">
+          <div class="chart-card">
+            <div class="chart-card__head">
+              <div>
+                <h3>Footprint breakdown</h3>
+                <p>Where your monthly emissions are coming from.</p>
+              </div>
+              <span class="chart-badge" data-breakdown-top>--</span>
+            </div>
+            <div class="breakdown-bars" id="breakdownBars"></div>
+          </div>
+
+          <div class="chart-card">
+            <div class="chart-card__head">
+              <div>
+                <h3>Progress trend</h3>
+                <p>Saved snapshots and the live estimate in one timeline.</p>
+              </div>
+              <span class="chart-badge" data-trend-label>Live</span>
+            </div>
+            <svg class="trend-chart" id="trendChart" viewBox="0 0 640 260" preserveAspectRatio="none" aria-label="Monthly trend chart"></svg>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="communitySummary">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">Community ranking</p>
+            <h2>Compare your score with the cohort.</h2>
+          </div>
+          <p class="section-note">Anonymous sample profiles keep the leaderboard lightweight for a demo.</p>
+        </div>
+
+        <div class="leaderboard-summary">
+          <div>
+            <span>Your rank</span>
+            <strong data-community="rank">--</strong>
+          </div>
+          <div>
+            <span>Community average</span>
+            <strong data-community="average">--</strong>
+          </div>
+        </div>
+        <div class="leaderboard-list" id="leaderboardList"></div>
+      </section>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
