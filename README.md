@@ -19,6 +19,15 @@ GreenPulse is a self-contained carbon footprint awareness platform prototype. It
 
 Open `index.html` directly in a browser, or serve the folder with any static server.
 
+## Run with Node
+
+```bash
+yarn
+yarn start
+```
+
+The app listens on `PORT` when deployed, which matches Render's default web service setup.
+
 ## Notes
 
 The calculator uses approximate emissions factors for demonstration and education.

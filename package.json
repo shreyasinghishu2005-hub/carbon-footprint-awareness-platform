@@ -1,0 +1,12 @@
+{
+  "name": "carbon-footprint-awareness-platform",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A carbon footprint awareness platform with live calculator, dashboard, goals, and reports.",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

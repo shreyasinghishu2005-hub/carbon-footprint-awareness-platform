@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: carbon-footprint-awareness-platform
+    env: node
+    plan: free
+    buildCommand: yarn
+    startCommand: yarn start
