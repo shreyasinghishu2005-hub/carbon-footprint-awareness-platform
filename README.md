@@ -26,6 +26,7 @@ GreenPulse is a self-contained carbon footprint awareness platform prototype. It
 - `reports.html` - snapshots, exports, and forecasts
 
 `index.html` now redirects to `home.html`, so the app still opens cleanly from the root.
+On mobile, the primary navigation collapses into a side drawer opened with the menu button.
 
 ## Run it
 

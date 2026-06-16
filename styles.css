@@ -162,9 +162,12 @@ button {
 
 .topnav {
   display: flex;
-  gap: 1rem;
+  flex: 1 1 auto;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.75rem;
   flex-wrap: wrap;
-  justify-content: center;
+  min-width: 0;
   color: var(--muted);
   font-size: 0.94rem;
 }
@@ -185,6 +188,43 @@ button {
 .topnav a.is-active {
   background: rgba(255, 255, 255, 0.09);
   color: var(--text);
+}
+
+.topnav__action {
+  white-space: nowrap;
+}
+
+.nav-toggle {
+  display: none;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.28rem;
+  width: 2.9rem;
+  height: 2.9rem;
+  padding: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--text);
+}
+
+.nav-toggle span {
+  display: block;
+  width: 1.05rem;
+  height: 2px;
+  border-radius: 999px;
+  background: currentColor;
+}
+
+.nav-toggle:hover,
+.nav-toggle:focus-visible {
+  background: rgba(255, 255, 255, 0.08);
+  outline: none;
+}
+
+.nav-overlay {
+  display: none;
 }
 
 .app {
@@ -1288,12 +1328,64 @@ footer {
 
 @media (max-width: 760px) {
   .topbar {
-    flex-direction: column;
-    align-items: stretch;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .brand {
+    min-width: 0;
+  }
+
+  .brand p {
+    font-size: 1rem;
+  }
+
+  .brand span {
+    font-size: 0.76rem;
+  }
+
+  .nav-toggle {
+    display: inline-flex;
+    flex-shrink: 0;
   }
 
   .topnav {
+    position: fixed;
+    top: 5rem;
+    right: 0.85rem;
+    left: auto;
+    z-index: 19;
+    display: none;
+    width: min(86vw, 330px);
+    max-height: calc(100vh - 6rem);
+    overflow-y: auto;
+    flex-direction: column;
+    align-items: stretch;
     justify-content: flex-start;
+    padding: 1rem;
+    border: 1px solid rgba(136, 171, 210, 0.18);
+    border-radius: 24px;
+    background: rgba(7, 18, 29, 0.96);
+    box-shadow: 0 22px 60px rgba(0, 0, 0, 0.45);
+  }
+
+  .topnav.is-open {
+    display: flex;
+  }
+
+  .topnav a,
+  .topnav__action {
+    width: 100%;
+  }
+
+  .topnav a {
+    justify-content: flex-start;
+    padding: 0.85rem 1rem;
+  }
+
+  .topnav__action {
+    margin-top: 0.25rem;
   }
 
   .report-actions {
@@ -1346,4 +1438,23 @@ footer {
     width: 2rem;
     height: 2rem;
   }
+
+  .nav-overlay {
+    position: fixed;
+    inset: 5rem 0 0;
+    z-index: 18;
+    display: none;
+    border: 0;
+    padding: 0;
+    background: rgba(3, 9, 16, 0.62);
+    backdrop-filter: blur(2px);
+  }
+
+  .nav-overlay.is-open {
+    display: block;
+  }
+}
+
+body.nav-open {
+  overflow: hidden;
 }

@@ -112,9 +112,57 @@ const QUIZ = {
   ],
 };
 
+function ensureNavigationMarkup() {
+  const topbar = document.querySelector(".topbar");
+  const topnav = document.querySelector(".topnav");
+
+  if (!topbar || !topnav) {
+    return;
+  }
+
+  topnav.id = topnav.id || "primaryNav";
+
+  if (!document.getElementById("navToggle")) {
+    const navToggle = document.createElement("button");
+    navToggle.id = "navToggle";
+    navToggle.type = "button";
+    navToggle.className = "nav-toggle";
+    navToggle.setAttribute("aria-controls", "primaryNav");
+    navToggle.setAttribute("aria-expanded", "false");
+    navToggle.setAttribute("aria-label", "Open menu");
+    navToggle.innerHTML = `
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    `;
+    topbar.insertBefore(navToggle, topnav);
+  }
+
+  if (!document.getElementById("navOverlay")) {
+    const navOverlay = document.createElement("button");
+    navOverlay.id = "navOverlay";
+    navOverlay.type = "button";
+    navOverlay.className = "nav-overlay";
+    navOverlay.setAttribute("aria-label", "Close menu");
+    topbar.insertAdjacentElement("afterend", navOverlay);
+  }
+
+  const saveSnapshot = document.getElementById("saveSnapshot");
+  if (saveSnapshot && saveSnapshot.parentElement !== topnav) {
+    saveSnapshot.classList.add("topnav__action");
+    topnav.appendChild(saveSnapshot);
+  }
+}
+
+ensureNavigationMarkup();
+
 const refs = {
+  main: document.querySelector("main"),
   form: document.getElementById("carbonForm"),
   saveSnapshot: document.getElementById("saveSnapshot"),
+  navToggle: document.getElementById("navToggle"),
+  navOverlay: document.getElementById("navOverlay"),
+  topnav: document.querySelector(".topnav"),
   resetDemo: document.getElementById("resetDemo"),
   commandCenter: document.getElementById("commandCenter"),
   assistantScore: document.getElementById("assistantScore"),
@@ -1205,7 +1253,50 @@ function formatCategory(category) {
   }
 }
 
+function setMobileNavOpen(isOpen) {
+  if (!refs.navToggle || !refs.navOverlay || !refs.topnav) {
+    return;
+  }
+
+  refs.topnav.classList.toggle("is-open", isOpen);
+  refs.navOverlay.classList.toggle("is-open", isOpen);
+  document.body.classList.toggle("nav-open", isOpen);
+  if (refs.main) {
+    refs.main.toggleAttribute("inert", isOpen);
+  }
+  refs.navToggle.setAttribute("aria-expanded", String(isOpen));
+  refs.navToggle.setAttribute("aria-label", isOpen ? "Close menu" : "Open menu");
+}
+
 function attachEvents() {
+  if (refs.navToggle && refs.navOverlay && refs.topnav) {
+    refs.navToggle.addEventListener("click", () => {
+      setMobileNavOpen(!refs.topnav.classList.contains("is-open"));
+    });
+
+    refs.navOverlay.addEventListener("click", () => {
+      setMobileNavOpen(false);
+    });
+
+    refs.topnav.addEventListener("click", (event) => {
+      if (event.target.closest("a,button")) {
+        setMobileNavOpen(false);
+      }
+    });
+
+    window.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        setMobileNavOpen(false);
+      }
+    });
+
+    window.addEventListener("resize", () => {
+      if (window.innerWidth > 760) {
+        setMobileNavOpen(false);
+      }
+    });
+  }
+
   if (refs.form) {
     refs.form.addEventListener("input", render);
   }
