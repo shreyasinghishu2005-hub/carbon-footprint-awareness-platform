@@ -12,6 +12,16 @@ const htmlPages = [
   "reports.html",
 ];
 
+const themedPages = {
+  "home.html": "home",
+  "calculator.html": "calculator",
+  "dashboard.html": "dashboard",
+  "goals.html": "goals",
+  "learn.html": "learn",
+  "community.html": "community",
+  "reports.html": "reports",
+};
+
 const requiredLinks = [
   "home.html",
   "calculator.html",
@@ -90,6 +100,7 @@ assert(!/[©]|shutterstock|getty|unsplash|pexels/i.test(sourceBundle), "Project 
 
 for (const page of htmlPages) {
   const html = read(page);
+  assert(html.includes(`data-page="${themedPages[page]}"`), `${page} should declare a page theme`);
   assert(/<meta name="viewport"[^>]*>/i.test(html), `${page} should include a viewport meta tag`);
   assert(html.includes('rel="stylesheet" href="styles.css"'), `${page} should load the shared stylesheet`);
   assert(html.includes('type="module" src="app.js"'), `${page} should load the shared app script`);
@@ -107,5 +118,8 @@ assert(read("learn.html").includes('aria-live="polite" aria-atomic="true"'), "le
 assert(read("calculator.html").includes('id="personaSelect"'), "calculator.html should include the persona selector");
 assert(read("calculator.html").includes('id="personaTitle"'), "calculator.html should include the persona title");
 assert(read("calculator.html").includes('id="personaFocusList"'), "calculator.html should include the persona focus list");
+for (const slug of Object.values(themedPages)) {
+  assert(styles.includes(`body[data-page="${slug}"]`), `styles.css should define the ${slug} page theme`);
+}
 
 console.log("Verification passed: pages, persona, navigation, accessibility, and asset checks are in place.");
