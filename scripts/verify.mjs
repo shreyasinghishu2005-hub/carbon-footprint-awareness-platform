@@ -70,10 +70,13 @@ assert(!appJs.includes("function buildAssistant("), "app.js should rely on the s
 assert(!appJs.includes("function buildAlerts("), "app.js should rely on the shared alert logic");
 assert(!appJs.includes("function buildLocations("), "app.js should rely on the shared location logic");
 assert(!appJs.includes("function formatCategory("), "app.js should rely on the shared category formatter");
+assert(appJs.includes("nav-drawer__close"), "app.js should render a close button in the mobile drawer");
+assert(appJs.includes('event.key !== "Tab"'), "app.js should trap focus inside the mobile drawer");
 assert(appJs.includes("ensureNavigationMarkup"), "app.js should bootstrap shared navigation");
 assert(appJs.includes("markActiveNavLink"), "app.js should mark the active nav link");
 assert(appJs.includes("skip-link"), "app.js should inject a skip link for accessibility");
 assert(styles.includes(".skip-link"), "styles.css should style the skip link");
+assert(styles.includes(".nav-drawer__close"), "styles.css should style the drawer close button");
 assert(styles.includes("@media (prefers-reduced-motion: reduce)"), "styles.css should support reduced motion");
 assert(sourceBundle.includes("Challenge vertical"), "Calculator page should surface a challenge vertical persona");
 assert(sourceBundle.includes("personaSelect"), "Calculator page should include a persona selector");

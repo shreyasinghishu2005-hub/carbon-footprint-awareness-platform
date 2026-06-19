@@ -243,12 +243,25 @@ button {
   height: 2px;
   border-radius: 999px;
   background: currentColor;
+  transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
 .nav-toggle:hover,
 .nav-toggle:focus-visible {
   background: rgba(255, 255, 255, 0.08);
   outline: none;
+}
+
+.nav-toggle[aria-expanded="true"] span:nth-child(1) {
+  transform: translateY(0.48rem) rotate(45deg);
+}
+
+.nav-toggle[aria-expanded="true"] span:nth-child(2) {
+  opacity: 0;
+}
+
+.nav-toggle[aria-expanded="true"] span:nth-child(3) {
+  transform: translateY(-0.48rem) rotate(-45deg);
 }
 
 .nav-overlay {
@@ -1441,32 +1454,50 @@ footer {
     left: auto;
     z-index: 19;
     display: none;
-    width: min(86vw, 330px);
+    width: min(90vw, 360px);
     max-height: calc(100vh - 6rem);
     overflow-y: auto;
     flex-direction: column;
     align-items: stretch;
     justify-content: flex-start;
     padding: 1rem;
+    padding-top: 1.05rem;
+    padding-bottom: calc(1rem + env(safe-area-inset-bottom));
     border: 1px solid rgba(136, 171, 210, 0.24);
     border-radius: 24px;
-    background: #091625;
+    background: linear-gradient(180deg, rgba(9, 22, 37, 0.98), rgba(7, 18, 30, 0.99));
     color: var(--text);
     box-shadow: 0 24px 64px rgba(0, 0, 0, 0.52);
     backdrop-filter: none;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(0.75rem);
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0s linear 0.2s;
   }
 
   .topnav.is-open {
     display: flex;
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+    transition-delay: 0s;
   }
 
   .nav-drawer__title {
     display: flex;
-    flex-direction: column;
-    gap: 0.2rem;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.75rem;
     padding: 0.2rem 0.15rem 0.65rem;
     margin-bottom: 0.35rem;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .nav-drawer__copy {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: 0.2rem;
   }
 
   .nav-drawer__title strong {
@@ -1479,6 +1510,26 @@ footer {
   .nav-drawer__title span {
     font-size: 0.83rem;
     color: var(--muted);
+  }
+
+  .nav-drawer__close {
+    flex-shrink: 0;
+    align-self: flex-start;
+    padding: 0.45rem 0.8rem;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text);
+    font-size: 0.82rem;
+    line-height: 1;
+    transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  }
+
+  .nav-drawer__close:hover,
+  .nav-drawer__close:focus-visible {
+    background: rgba(255, 255, 255, 0.09);
+    border-color: rgba(255, 255, 255, 0.24);
+    outline: none;
   }
 
   .topnav a,
@@ -1558,15 +1609,22 @@ footer {
     position: fixed;
     inset: 5rem 0 0;
     z-index: 18;
-    display: none;
+    display: block;
     border: 0;
     padding: 0;
     background: rgba(3, 9, 16, 0.8);
     backdrop-filter: none;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.2s ease, visibility 0s linear 0.2s;
   }
 
   .nav-overlay.is-open {
-    display: block;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transition-delay: 0s;
   }
 }
 

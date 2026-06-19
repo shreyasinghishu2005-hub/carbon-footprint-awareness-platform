@@ -138,11 +138,16 @@ function ensureNavigationMarkup() {
   }
 
   if (!document.querySelector(".nav-drawer__title")) {
+    const activeLink = topnav.querySelector("a[aria-current='page']") || topnav.querySelector("a.is-active");
+    const activeLabel = activeLink?.textContent?.trim() || "Home";
     const navTitle = document.createElement("div");
     navTitle.className = "nav-drawer__title";
     navTitle.innerHTML = `
-      <strong>Menu</strong>
-      <span>Open a section</span>
+      <div class="nav-drawer__copy">
+        <strong>Menu</strong>
+        <span>${activeLabel} • quick links to every page</span>
+      </div>
+      <button class="nav-drawer__close" type="button" aria-label="Close menu">Close</button>
     `;
     topnav.prepend(navTitle);
   }
@@ -1139,6 +1144,30 @@ function attachEvents() {
     window.addEventListener("keydown", (event) => {
       if (event.key === "Escape") {
         setMobileNavOpen(false);
+        return;
+      }
+
+      if (event.key !== "Tab" || !refs.topnav.classList.contains("is-open")) {
+        return;
+      }
+
+      const focusableElements = [...refs.topnav.querySelectorAll("a,button")].filter(
+        (element) => !element.hasAttribute("disabled"),
+      );
+
+      if (focusableElements.length === 0) {
+        return;
+      }
+
+      const firstFocusable = focusableElements[0];
+      const lastFocusable = focusableElements[focusableElements.length - 1];
+
+      if (event.shiftKey && document.activeElement === firstFocusable) {
+        event.preventDefault();
+        lastFocusable.focus();
+      } else if (!event.shiftKey && document.activeElement === lastFocusable) {
+        event.preventDefault();
+        firstFocusable.focus();
       }
     });
 
