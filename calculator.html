@@ -39,10 +39,10 @@
       <section class="hero panel">
         <div class="hero-copy">
           <p class="eyebrow">Calculator page</p>
-          <h1>Measure the habits that shape your footprint.</h1>
+          <h1>Measure the habits that shape a student commuter footprint.</h1>
           <p class="hero-text">
             Adjust commute, home energy, food, and waste inputs to see your monthly carbon estimate update
-            instantly with practical improvement suggestions.
+            instantly with practical improvement suggestions for the chosen persona.
           </p>
 
           <div class="hero-actions">
@@ -76,6 +76,40 @@
           </div>
           <p class="hero-card__note" data-hero-stat="target">--</p>
         </aside>
+      </section>
+
+      <section class="panel persona-panel" aria-labelledby="personaPanelTitle">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">Challenge vertical</p>
+            <h2 id="personaPanelTitle">Pick the persona the assistant should optimize for.</h2>
+          </div>
+          <p class="section-note">
+            The assistant, goals, and recommendations adapt to the selected life scenario.
+          </p>
+        </div>
+
+        <div class="persona-grid">
+          <label class="field persona-field">
+            <div class="field-row">
+              <span>Active persona</span>
+              <strong data-persona-label>College commuter</strong>
+            </div>
+            <select class="persona-select" id="personaSelect" aria-describedby="personaSummary">
+              <option value="student-commuter">College commuter</option>
+              <option value="remote-worker">Remote worker</option>
+              <option value="family-home">Family home</option>
+            </select>
+            <small id="personaSummary">Best for students balancing campus travel, meals, and shared housing.</small>
+          </label>
+
+          <article class="persona-card">
+            <span class="content-tag">Dynamic assistant</span>
+            <h3 id="personaTitle">College commuter focus</h3>
+            <p id="personaSummaryText">Best for students balancing campus travel, meals, and shared housing.</p>
+            <ul id="personaFocusList"></ul>
+          </article>
+        </div>
       </section>
 
       <section class="panel" id="calculator">

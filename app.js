@@ -2,6 +2,7 @@ const STORAGE_KEYS = {
   settings: "greenpulse-settings",
   history: "greenpulse-history",
   journal: "greenpulse-journal",
+  persona: "greenpulse-persona",
 };
 
 const DEFAULT_INPUTS = {
@@ -112,6 +113,176 @@ const QUIZ = {
   ],
 };
 
+const PERSONAS = {
+  "student-commuter": {
+    label: "College commuter",
+    summary: "Best for students balancing campus travel, meals, and shared housing.",
+    focus: "campus transit, meal planning, and dorm energy",
+    bullets: [
+      "Use transit, biking, or carpooling for campus travel.",
+      "Trim dorm or apartment electricity with smaller daily habits.",
+      "Swap a few convenience meals for lower-carbon lunches.",
+    ],
+    goals: {
+      commute: {
+        title: "Campus Transit",
+        detail: "Replace a couple of car-heavy days with transit, walking, or biking.",
+      },
+      energy: {
+        title: "Dorm Power Saver",
+        detail: "Keep lighting, chargers, and standby loads under control.",
+      },
+      food: {
+        title: "Meal Plan Pivot",
+        detail: "Move one or two takeout meals toward plant-based choices each week.",
+      },
+      waste: {
+        title: "Recycle and Refill",
+        detail: "Use campus recycling, refill stations, and compost points more often.",
+      },
+    },
+    recommendations: {
+      commute: {
+        title: "Swap two campus driving days for transit",
+        detail: "Short campus loops are ideal for the bus, rail, biking, or a shared ride.",
+      },
+      home: {
+        title: "Trim dorm or apartment electricity by 10%",
+        detail: "Charging habits, lights, and standby devices matter a lot in student housing.",
+      },
+      food: {
+        title: "Turn one takeout day into a plant-based lunch",
+        detail: "A small lunch swap keeps the budget steady and lowers the weekly footprint.",
+      },
+      waste: {
+        title: "Use campus recycling and refill points",
+        detail: "Sorting paper, plastic, and containers better keeps useful material in circulation.",
+      },
+      fallback: {
+        title: "Track one campus eco win",
+        detail: "Log one travel, meal, or energy habit so the weekly trend becomes easier to improve.",
+      },
+    },
+    alerts: {
+      commute: "Campus travel is the quickest lever for this persona.",
+      home: "Dorm or apartment power habits can lower the monthly curve.",
+      food: "Meal planning can unlock easy savings without a big lifestyle change.",
+    },
+  },
+  "remote-worker": {
+    label: "Remote worker",
+    summary: "Best for people working from home and optimizing errands, food, and electricity.",
+    focus: "home energy, trip bundling, and meal prep",
+    bullets: [
+      "Batch errands so short car trips happen less often.",
+      "Cut home office electricity with lights, devices, and thermostat habits.",
+      "Prep meals that lean plant-forward during the work week.",
+    ],
+    goals: {
+      commute: {
+        title: "Errand Bundler",
+        detail: "Consolidate trips and replace one solo drive with a lower-carbon option.",
+      },
+      energy: {
+        title: "Home Office Saver",
+        detail: "Reduce home electricity with efficient lighting and smarter device use.",
+      },
+      food: {
+        title: "Workweek Meal Prep",
+        detail: "Build a repeatable set of plant-forward lunches and dinners.",
+      },
+      waste: {
+        title: "Compacting Routine",
+        detail: "Keep packaging, compost, and recycling sorted as part of the daily rhythm.",
+      },
+    },
+    recommendations: {
+      commute: {
+        title: "Bundle errands into one low-carbon trip",
+        detail: "Remote work often creates scattered trips; grouping them saves time and emissions.",
+      },
+      home: {
+        title: "Reduce home office electricity by 10%",
+        detail: "A few efficiency tweaks in the workspace can cut a visible share of monthly energy.",
+      },
+      food: {
+        title: "Prep plant-rich lunches for the week",
+        detail: "Simple meal prep reduces last-minute high-impact food choices.",
+      },
+      waste: {
+        title: "Add a compost and recycling routine",
+        detail: "Clear sorting habits make home waste more circular and easier to track.",
+      },
+      fallback: {
+        title: "Track one work-from-home habit",
+        detail: "Log one travel, meal, or energy action so the assistant can keep learning.",
+      },
+    },
+    alerts: {
+      commute: "Bundling errands is a strong way to lower solo trips.",
+      home: "Home energy matters more for this profile, so keep an eye on electricity use.",
+      food: "Meal prep and plant-forward lunches can drop the weekly curve.",
+    },
+  },
+  "family-home": {
+    label: "Family home",
+    summary: "Best for households managing school runs, shared meals, and home utilities.",
+    focus: "school runs, shared meals, and home utilities",
+    bullets: [
+      "Coordinate school runs or carpool days to reduce repeated driving.",
+      "Keep household energy efficient with lights and thermostat routines.",
+      "Make a couple of family dinners more plant-forward each week.",
+    ],
+    goals: {
+      commute: {
+        title: "School Run Switch",
+        detail: "Replace a few repeat car trips with carpooling, transit, or active travel.",
+      },
+      energy: {
+        title: "Whole-Home Saver",
+        detail: "Bring the household electricity curve down with better daily routines.",
+      },
+      food: {
+        title: "Family Dinner Shift",
+        detail: "Move two dinners a week toward plant-forward recipes everyone can share.",
+      },
+      waste: {
+        title: "Household Circularity",
+        detail: "Sort waste more carefully and keep recycling or composting on a steady routine.",
+      },
+    },
+    recommendations: {
+      commute: {
+        title: "Carpool one school-run or commute day",
+        detail: "Shared travel can reduce the biggest household transport spikes quickly.",
+      },
+      home: {
+        title: "Cut household electricity by 10%",
+        detail: "Simple lighting and thermostat habits can move a family bill and footprint together.",
+      },
+      food: {
+        title: "Make two family dinners plant-forward",
+        detail: "A couple of shared meals can change the footprint without a full kitchen reset.",
+      },
+      waste: {
+        title: "Tighten recycling and compost sorting",
+        detail: "Clear household sorting keeps useful material from landing in the bin.",
+      },
+      fallback: {
+        title: "Log one household win",
+        detail: "Track a shared travel, meal, or energy habit so the whole family sees progress.",
+      },
+    },
+    alerts: {
+      commute: "School runs and shared travel usually create the biggest savings opportunity.",
+      home: "Home utilities can be a major lever for family households.",
+      food: "Shared meal planning can create a visible drop without extra complexity.",
+    },
+  },
+};
+
+const DEFAULT_PERSONA = "student-commuter";
+
 function ensureNavigationMarkup() {
   const main = document.querySelector("main");
   const topbar = document.querySelector(".topbar");
@@ -190,6 +361,12 @@ ensureNavigationMarkup();
 const refs = {
   main: document.querySelector("main"),
   form: document.getElementById("carbonForm"),
+  personaSelect: document.getElementById("personaSelect"),
+  personaLabel: document.querySelector("[data-persona-label]"),
+  personaTitle: document.getElementById("personaTitle"),
+  personaSummary: document.getElementById("personaSummary"),
+  personaSummaryText: document.getElementById("personaSummaryText"),
+  personaFocusList: document.getElementById("personaFocusList"),
   saveSnapshot: document.getElementById("saveSnapshot"),
   navToggle: document.getElementById("navToggle"),
   navOverlay: document.getElementById("navOverlay"),
@@ -230,10 +407,13 @@ const numberFormatter = new Intl.NumberFormat("en-US", { maximumFractionDigits: 
 const decimalFormatter = new Intl.NumberFormat("en-US", { maximumFractionDigits: 1 });
 const dateFormatter = new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric" });
 
+const savedPersona = loadValue(STORAGE_KEYS.persona, DEFAULT_PERSONA);
+
 const state = {
   inputs: loadJson(STORAGE_KEYS.settings, DEFAULT_INPUTS),
   history: loadJson(STORAGE_KEYS.history, []),
   journal: loadJson(STORAGE_KEYS.journal, []),
+  persona: PERSONAS[savedPersona] ? savedPersona : DEFAULT_PERSONA,
 };
 
 let toastTimer = null;
@@ -304,6 +484,23 @@ function saveJson(key, value) {
   }
 }
 
+function loadValue(key, fallback) {
+  try {
+    const raw = localStorage.getItem(key);
+    return raw ? raw : fallback;
+  } catch {
+    return fallback;
+  }
+}
+
+function saveValue(key, value) {
+  try {
+    localStorage.setItem(key, value);
+  } catch {
+    // Local storage is optional for this prototype.
+  }
+}
+
 function formatCarbon(value) {
   if (value >= 1000) {
     return `${decimalFormatter.format(value / 1000)} t CO2e`;
@@ -317,6 +514,10 @@ function formatShortCarbon(value) {
 
 function formatPercent(value) {
   return `${Math.round(value)}%`;
+}
+
+function getPersonaProfile(persona) {
+  return PERSONAS[persona] || PERSONAS[DEFAULT_PERSONA];
 }
 
 function readInputs() {
@@ -391,7 +592,7 @@ function updateInputLabels(inputs) {
   }
 }
 
-function calculateFootprint(inputs) {
+function calculateFootprint(inputs, persona = DEFAULT_PERSONA) {
   const commute = (inputs.carKm * 0.21 + inputs.transitKm * 0.08) * 4.33 + inputs.shortFlights * 220;
   const home = inputs.electricityKwh * 0.82 + inputs.gasTherms * 5.3;
   const food = (inputs.meatMeals * 4.8 + inputs.plantMeals * 1.1) * 4.33;
@@ -410,10 +611,10 @@ function calculateFootprint(inputs) {
     Object.entries(breakdown).map(([key, value]) => [key, total === 0 ? 0 : (value / total) * 100]),
   );
 
-  const recommendations = buildRecommendations(inputs, breakdown);
+  const recommendations = buildRecommendations(inputs, breakdown, persona);
   const potentialSavings = recommendations.reduce((sum, item) => sum + item.savings, 0);
-  const goals = buildGoals(inputs);
-  const badges = buildBadges(inputs, total, goals);
+  const goals = buildGoals(inputs, persona);
+  const badges = buildBadges(inputs, total, goals, persona);
 
   return {
     breakdown,
@@ -430,60 +631,47 @@ function calculateFootprint(inputs) {
     potentialSavings,
     goals,
     badges,
+    persona,
   };
 }
 
-function buildRecommendations(inputs, breakdown) {
+function buildRecommendations(inputs, breakdown, persona = DEFAULT_PERSONA) {
+  const profile = getPersonaProfile(persona);
   const categoryOrder = Object.entries(breakdown).sort((left, right) => right[1] - left[1]);
   const recommendations = [];
 
   for (const [category, value] of categoryOrder.slice(0, 3)) {
     if (category === "commute") {
-      recommendations.push({
-        title: "Shift two car days to transit",
-        detail: `Commute is your largest source. Replacing a couple of driving days can lower emissions quickly.`,
-        savings: value * 0.18,
-      });
+      recommendations.push({ ...profile.recommendations.commute, savings: value * 0.18 });
     }
 
     if (category === "home") {
-      recommendations.push({
-        title: "Trim electricity use by 10%",
-        detail: "LED lighting, smart strips, and better thermostat habits make this a low-friction win.",
-        savings: value * 0.1,
-      });
+      recommendations.push({ ...profile.recommendations.home, savings: value * 0.1 });
     }
 
     if (category === "food") {
       const weeklySwitch = Math.max(2, Math.round(inputs.meatMeals * 0.3));
       recommendations.push({
-        title: "Swap several meat meals for plants",
-        detail: `Replacing ${weeklySwitch} meat-based meals each week with plant-based meals creates a meaningful drop.`,
+        ...profile.recommendations.food,
+        detail: `${profile.recommendations.food.detail} Replacing about ${weeklySwitch} meat-based meals each week makes the change visible.`,
         savings: weeklySwitch * (4.8 - 1.1) * 4.33,
       });
     }
 
     if (category === "waste") {
-      recommendations.push({
-        title: "Raise recycling and composting rates",
-        detail: "A cleaner waste stream lowers landfill emissions and keeps useful material in circulation.",
-        savings: value * 0.22,
-      });
+      recommendations.push({ ...profile.recommendations.waste, savings: value * 0.22 });
     }
   }
 
   if (recommendations.length < 3) {
-    recommendations.push({
-      title: "Track one saved day each week",
-      detail: "Log changes consistently to turn awareness into a habit loop.",
-      savings: 10,
-    });
+    recommendations.push({ ...profile.recommendations.fallback, savings: 10 });
   }
 
   return recommendations.slice(0, 3);
 }
 
-function buildGoals(inputs) {
+function buildGoals(inputs, persona = DEFAULT_PERSONA) {
+  const profile = getPersonaProfile(persona);
   const travelTotal = inputs.carKm + inputs.transitKm;
   const transitProgress = travelTotal === 0 ? 100 : clamp((inputs.transitKm / travelTotal) * 100, 0, 100);
   const energyProgress = clamp(((240 - inputs.electricityKwh) / 120) * 100, 0, 100);
@@ -492,33 +680,34 @@ function buildGoals(inputs) {
 
   return [
     {
-      title: "Transit Tuesday",
-      detail: "Make public transport your default for at least two commuting days per week.",
+      title: profile.goals.commute.title,
+      detail: profile.goals.commute.detail,
       progress: transitProgress,
       reward: "Mobility badge",
     },
     {
-      title: "Power Saver",
-      detail: "Bring household electricity below the 160 kWh monthly benchmark.",
+      title: profile.goals.energy.title,
+      detail: profile.goals.energy.detail,
       progress: energyProgress,
       reward: "Energy badge",
     },
     {
-      title: "Plant Forward",
-      detail: "Move toward more plant-based meals than meat-heavy meals each week.",
+      title: profile.goals.food.title,
+      detail: profile.goals.food.detail,
       progress: foodProgress,
       reward: "Food badge",
     },
     {
-      title: "Circular Home",
-      detail: "Raise recycling rates and cut waste bags to reduce landfill impact.",
+      title: profile.goals.waste.title,
+      detail: profile.goals.waste.detail,
       progress: wasteProgress,
       reward: "Waste badge",
     },
   ];
 }
 
-function buildBadges(inputs, total, goals) {
+function buildBadges(inputs, total, goals, persona = DEFAULT_PERSONA) {
+  const profile = getPersonaProfile(persona);
   const transitShare = inputs.carKm + inputs.transitKm === 0 ? 0 : inputs.transitKm / (inputs.carKm + inputs.transitKm);
   const foodShare = inputs.meatMeals + inputs.plantMeals === 0 ? 0 : inputs.plantMeals / (inputs.meatMeals + inputs.plantMeals);
 
@@ -526,12 +715,12 @@ function buildBadges(inputs, total, goals) {
     {
       name: "Climate Starter",
       active: total <= 650,
-      detail: "Monthly footprint under 650 kg CO2e.",
+      detail: `Monthly footprint under 650 kg CO2e for the ${profile.label.toLowerCase()} profile.`,
     },
     {
       name: "Low Carbon Hero",
       active: total <= 300,
-      detail: "Monthly footprint under the target range.",
+      detail: `Monthly footprint under the target range for the ${profile.label.toLowerCase()} profile.`,
     },
     {
       name: "Transit Champion",
@@ -551,7 +740,8 @@ function buildBadges(inputs, total, goals) {
   ];
 }
 
-function buildAssistant(result) {
+function buildAssistant(result, persona = DEFAULT_PERSONA) {
+  const profile = getPersonaProfile(persona);
   const bestRecommendation = result.recommendations[0];
   const targetPhrase =
     result.targetGap > 0
@@ -559,14 +749,14 @@ function buildAssistant(result) {
       : "stay below the 300 kg target";
   const summary =
     result.score >= 80
-      ? `You're in a strong climate lane. Protect the momentum by focusing on ${formatCategory(result.biggestCategory).toLowerCase()} and helping the team ${targetPhrase}.`
+      ? `You're in a strong climate lane for a ${profile.label.toLowerCase()} setup. Protect the momentum by focusing on ${profile.focus} and helping the team ${targetPhrase}.`
       : result.score >= 60
-        ? `Good foundation. Your fastest win is ${bestRecommendation.title.toLowerCase()}, then hold a steady snapshot rhythm to make the trend visible.`
-        : `There is a lot of upside here. Start with ${bestRecommendation.title.toLowerCase()} and one simple journal habit so the next week looks different.`;
+        ? `Good foundation for a ${profile.label.toLowerCase()} profile. Your fastest win is ${bestRecommendation.title.toLowerCase()}, then hold a steady snapshot rhythm to make the trend visible.`
+        : `There is a lot of upside for a ${profile.label.toLowerCase()} profile. Start with ${bestRecommendation.title.toLowerCase()} and one simple journal habit so the next week looks different.`;
 
   const plan = [
     {
-      title: `Lead with ${formatCategory(result.biggestCategory)}`,
+      title: `Lead with ${profile.label}`,
       text: bestRecommendation.detail,
     },
     {
@@ -586,7 +776,8 @@ function buildAssistant(result) {
   };
 }
 
-function buildAlerts(result) {
+function buildAlerts(result, persona = DEFAULT_PERSONA) {
+  const profile = getPersonaProfile(persona);
   const alerts = [];
   const commuteShare = result.total === 0 ? 0 : result.breakdown.commute / result.total;
   const homeShare = result.total === 0 ? 0 : result.breakdown.home / result.total;
@@ -610,7 +801,7 @@ function buildAlerts(result) {
     alerts.push({
       tone: "high",
       title: "Commute is still dominant",
-      detail: "A transit swap or one shared ride day can change the chart quickly.",
+      detail: `${profile.alerts.commute} A transit swap or one shared ride day can change the chart quickly.`,
     });
   } else {
     alerts.push({
@@ -624,13 +815,13 @@ function buildAlerts(result) {
     alerts.push({
       tone: "medium",
       title: "Home energy matters",
-      detail: "Lighting, thermostat behavior, and standby loads can unlock an easy reduction.",
+      detail: `${profile.alerts.home} Lighting, thermostat behavior, and standby loads can unlock an easy reduction.`,
     });
   } else if (foodShare >= 0.3) {
     alerts.push({
       tone: "medium",
       title: "Food choices are shaping the curve",
-      detail: "A few plant-based swaps can create visible monthly savings.",
+      detail: `${profile.alerts.food} A few plant-based swaps can create visible monthly savings.`,
     });
   }
 
@@ -638,7 +829,7 @@ function buildAlerts(result) {
     alerts.push({
       tone: "good",
       title: "Journal streak opportunity",
-      detail: "Log one eco win today so your sustainability story is easier to show and share.",
+      detail: `Log one eco win today so the ${profile.label.toLowerCase()} assistant has a stronger weekly story to work with.`,
     });
   }
 
@@ -681,9 +872,11 @@ function downloadTextFile(filename, content) {
 }
 
 function downloadReport(result) {
+  const profile = getPersonaProfile(state.persona);
   const lines = [
     "GreenPulse Sustainability Report",
     `Generated: ${new Date().toLocaleString()}`,
+    `Persona focus: ${profile.label}`,
     "",
     `Monthly footprint: ${formatCarbon(result.total)}`,
     `Weekly average: ${formatCarbon(result.weekly)}`,
@@ -705,11 +898,13 @@ function downloadReport(result) {
 }
 
 function downloadCertificate(result) {
+  const profile = getPersonaProfile(state.persona);
   const lines = [
     "GreenPulse Sustainability Certificate",
     "",
     "This certifies a visible commitment to lower-carbon habits.",
     "",
+    `Persona focus: ${profile.label}`,
     `Footprint: ${formatCarbon(result.total)}`,
     `Score: ${result.score}/100`,
     `Best lever: ${formatCategory(result.biggestCategory)}`,
@@ -728,9 +923,10 @@ function render() {
     saveJson(STORAGE_KEYS.settings, inputs);
   }
 
-  const result = calculateFootprint(inputs);
+  const result = calculateFootprint(inputs, state.persona);
 
   updateInputLabels(inputs);
+  updatePersonaUI(state.persona);
   updateHero(result);
   updateMetrics(result);
   renderCommandCenter(result);
@@ -762,7 +958,7 @@ function renderAssistant(result) {
     return;
   }
 
-  const assistant = buildAssistant(result);
+  const assistant = buildAssistant(result, state.persona);
   refs.assistantScore.textContent = assistant.scoreLabel;
   refs.assistantSummary.textContent = assistant.summary;
 
@@ -783,7 +979,7 @@ function renderAlerts(result) {
     return;
   }
 
-  const alerts = buildAlerts(result);
+  const alerts = buildAlerts(result, state.persona);
   refs.alertList.innerHTML = alerts
     .map(
       (alert) => `
@@ -1283,9 +1479,11 @@ function resetDemo() {
   state.inputs = cloneValue(DEFAULT_INPUTS);
   state.history = [];
   state.journal = [];
+  state.persona = DEFAULT_PERSONA;
   saveJson(STORAGE_KEYS.settings, state.inputs);
   saveJson(STORAGE_KEYS.history, state.history);
   saveJson(STORAGE_KEYS.journal, state.journal);
+  saveValue(STORAGE_KEYS.persona, state.persona);
   applyInputs(state.inputs);
   render();
   showToast("Demo settings restored.");
@@ -1304,6 +1502,48 @@ function formatCategory(category) {
     default:
       return category;
   }
+}
+
+function updatePersonaUI(persona) {
+  const profile = getPersonaProfile(persona);
+
+  if (refs.personaSelect && refs.personaSelect.value !== persona) {
+    refs.personaSelect.value = persona;
+  }
+
+  if (refs.personaLabel) {
+    refs.personaLabel.textContent = profile.label;
+  }
+
+  if (refs.personaTitle) {
+    refs.personaTitle.textContent = `${profile.label} focus`;
+  }
+
+  if (refs.personaSummary) {
+    refs.personaSummary.textContent = profile.summary;
+  }
+
+  if (refs.personaSummaryText) {
+    refs.personaSummaryText.textContent = profile.summary;
+  }
+
+  if (refs.personaFocusList) {
+    refs.personaFocusList.innerHTML = profile.bullets.map((bullet) => `<li>${bullet}</li>`).join("");
+  }
+}
+
+function setPersona(persona) {
+  const nextPersona = PERSONAS[persona] ? persona : DEFAULT_PERSONA;
+  if (state.persona === nextPersona) {
+    updatePersonaUI(nextPersona);
+    return;
+  }
+
+  state.persona = nextPersona;
+  saveValue(STORAGE_KEYS.persona, nextPersona);
+  updatePersonaUI(nextPersona);
+  render();
+  showToast(`${getPersonaProfile(nextPersona).label} profile selected.`);
 }
 
 function setMobileNavOpen(isOpen) {
@@ -1333,6 +1573,12 @@ function setMobileNavOpen(isOpen) {
 }
 
 function attachEvents() {
+  if (refs.personaSelect) {
+    refs.personaSelect.addEventListener("change", (event) => {
+      setPersona(event.target.value);
+    });
+  }
+
   if (refs.navToggle && refs.navOverlay && refs.topnav) {
     refs.navToggle.addEventListener("click", () => {
       setMobileNavOpen(!refs.topnav.classList.contains("is-open"));

@@ -826,6 +826,23 @@ button {
   line-height: 1.5;
 }
 
+.field select,
+.persona-select {
+  width: 100%;
+  min-height: 2.9rem;
+  padding: 0.7rem 0.95rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  background: rgba(6, 16, 26, 0.88);
+  color: var(--text);
+}
+
+.field select:focus-visible,
+.persona-select:focus-visible {
+  outline: 2px solid rgba(var(--accent-rgb), 0.35);
+  outline-offset: 2px;
+}
+
 input[type="range"] {
   width: 100%;
   appearance: none;
@@ -857,6 +874,44 @@ input[type="range"]::-moz-range-thumb {
 .metric-grid {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   padding: 0 1.25rem;
+}
+
+.persona-panel {
+  margin-top: 1rem;
+}
+
+.persona-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  gap: 1rem;
+  padding: 0 1.25rem 1.25rem;
+}
+
+.persona-card {
+  padding: 1rem 1.05rem;
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.persona-card h3 {
+  margin: 0.15rem 0 0.55rem;
+  font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  font-size: 1.35rem;
+  letter-spacing: -0.02em;
+}
+
+.persona-card p {
+  margin: 0 0 0.85rem;
+  color: var(--muted);
+}
+
+.persona-card ul {
+  margin: 0;
+  padding-left: 1.1rem;
+  color: var(--text);
+  display: grid;
+  gap: 0.55rem;
 }
 
 .metric-card {
@@ -1329,6 +1384,7 @@ footer {
   .workspace,
   .stacked,
   .module-grid,
+  .persona-grid,
   .command-grid,
   .chart-grid,
   .reports-grid,
@@ -1449,6 +1505,7 @@ footer {
   .hero,
   .panel > .section-head,
   .module-grid,
+  .persona-grid,
   .calculator,
   .command-grid,
   .metric-grid,
@@ -1470,6 +1527,11 @@ footer {
 
   .hero-card__stats {
     grid-template-columns: 1fr;
+  }
+
+  .persona-grid {
+    padding-left: 0.85rem;
+    padding-right: 0.85rem;
   }
 
   .field-row,

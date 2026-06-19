@@ -37,6 +37,8 @@ const scannedFiles = [
   "package.json",
   "server.js",
   "render.yaml",
+  "engine.mjs",
+  "tests/engine.test.mjs",
 ];
 
 function read(file) {
@@ -58,16 +60,21 @@ const hasRemoteAssetAttr = /(?:src|href)\s*=\s*["'][^"']*https?:\/\//i;
 const hasRemoteAssetUrl = /url\(\s*["']?https?:\/\//i;
 
 assert(packageJson.scripts?.start === "node server.js", "package.json should expose the start script");
-assert(packageJson.scripts?.test === "node scripts/verify.mjs", "package.json should expose the test script");
+assert(packageJson.scripts?.test === "node --test tests/engine.test.mjs && node scripts/verify.mjs", "package.json should expose the test script");
 assert(indexHtml.includes("url=home.html"), "index.html should redirect to home.html");
 assert(appJs.includes("ensureNavigationMarkup"), "app.js should bootstrap shared navigation");
 assert(appJs.includes("markActiveNavLink"), "app.js should mark the active nav link");
 assert(appJs.includes("skip-link"), "app.js should inject a skip link for accessibility");
 assert(styles.includes(".skip-link"), "styles.css should style the skip link");
 assert(styles.includes("@media (prefers-reduced-motion: reduce)"), "styles.css should support reduced motion");
+assert(sourceBundle.includes("Challenge vertical"), "Calculator page should surface a challenge vertical persona");
+assert(sourceBundle.includes("personaSelect"), "Calculator page should include a persona selector");
+assert(scannedFiles.includes("engine.mjs"), "Project should include a shared pure engine module");
+assert(scannedFiles.includes("tests/engine.test.mjs"), "Project should include the new unit tests");
+assert(sourceBundle.includes("node --test tests/engine.test.mjs"), "package.json should run unit tests");
 assert(sourceBundle.includes("No third-party stock photos"), "README should document that assets are self-contained");
 assert(!(hasRemoteAssetAttr.test(sourceBundle) || hasRemoteAssetUrl.test(sourceBundle)), "Project files should not reference external media/CDN assets");
-assert(!/[©]|copyright|shutterstock|getty|unsplash|pexels/i.test(sourceBundle), "Project files should avoid stock/copyright risk references");
+assert(!/[©]|shutterstock|getty|unsplash|pexels/i.test(sourceBundle), "Project files should avoid stock or media risk references");
 
 for (const page of htmlPages) {
   const html = read(page);
@@ -85,5 +92,8 @@ assert(read("dashboard.html").includes('role="img"'), "dashboard.html should exp
 assert(read("dashboard.html").includes('aria-labelledby="trendChartTitle trendChartDesc"'), "dashboard.html should label the trend chart");
 assert(read("learn.html").includes('role="group" aria-label="Climate quiz answers"'), "learn.html should label the quiz group");
 assert(read("learn.html").includes('aria-live="polite" aria-atomic="true"'), "learn.html should announce quiz feedback");
+assert(read("calculator.html").includes('id="personaSelect"'), "calculator.html should include the persona selector");
+assert(read("calculator.html").includes('id="personaTitle"'), "calculator.html should include the persona title");
+assert(read("calculator.html").includes('id="personaFocusList"'), "calculator.html should include the persona focus list");
 
-console.log("Verification passed: pages, navigation, and accessibility hooks are in place.");
+console.log("Verification passed: pages, persona, navigation, accessibility, and asset checks are in place.");

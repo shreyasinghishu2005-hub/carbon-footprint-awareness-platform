@@ -2,6 +2,8 @@
 
 GreenPulse is a self-contained carbon footprint awareness platform prototype. It helps users measure monthly emissions, see their biggest sources, get tailored recommendations, track goals, and save progress snapshots over time.
 
+Challenge focus: the current experience is tuned around a college commuter persona, with alternate profiles for remote workers and family homes.
+
 ## Features
 
 - Live carbon footprint calculator
@@ -47,7 +49,7 @@ The app listens on `PORT` when deployed, which matches Render's default web serv
 yarn test
 ```
 
-This checks the shared page structure, navigation, and accessibility hooks.
+This runs the unit tests plus the shared page structure, navigation, accessibility, and asset-safety checks.
 
 ## Assets
 
