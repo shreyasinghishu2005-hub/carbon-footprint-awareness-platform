@@ -49,6 +49,10 @@ yarn test
 
 This checks the shared page structure, navigation, and accessibility hooks.
 
+## Assets
+
+All visuals are built with HTML, CSS, and inline SVG only. No third-party stock photos, icon packs, or external media assets are included.
+
 ## Notes
 
 The calculator uses approximate emissions factors for demonstration and education.

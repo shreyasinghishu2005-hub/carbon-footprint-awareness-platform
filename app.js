@@ -1022,6 +1022,8 @@ function buildTrendSvg(values, labels) {
   ].join("");
 
   return `
+    <title id="trendChartTitle">Monthly carbon trend</title>
+    <desc id="trendChartDesc">A line chart showing the last saved snapshots and the current live footprint estimate.</desc>
     <defs>
       <linearGradient id="trendStroke" x1="0" x2="1" y1="0" y2="0">
         <stop offset="0%" stop-color="#56d3ff" />
@@ -1411,17 +1413,18 @@ function attachEvents() {
       const button = event.target.closest("button[data-correct]");
       if (!button) {
         return;
-    }
-
-    const selected = button.dataset.correct === "true";
-    const answer = QUIZ.answers.find((item) => String(item.correct) === button.dataset.correct);
-
-    refs.quizOptions.querySelectorAll("button").forEach((option) => {
-      option.classList.remove("is-selected", "is-correct", "is-wrong");
-      if (option === button) {
-        option.classList.add("is-selected", selected ? "is-correct" : "is-wrong");
       }
-    });
+
+      const selected = button.dataset.correct === "true";
+      const answer = QUIZ.answers.find((item) => String(item.correct) === button.dataset.correct);
+
+      refs.quizOptions.querySelectorAll("button").forEach((option) => {
+        option.classList.remove("is-selected", "is-correct", "is-wrong");
+        option.setAttribute("aria-pressed", option === button ? "true" : "false");
+        if (option === button) {
+          option.classList.add("is-selected", selected ? "is-correct" : "is-wrong");
+        }
+      });
 
       refs.quizResult.textContent = selected ? answer.response : `${answer.response} Try again to spot the bigger climate win.`;
     });
@@ -1436,7 +1439,7 @@ function initQuiz() {
   refs.quizOptions.innerHTML = QUIZ.answers
     .map(
       (answer, index) => `
-        <button class="quiz-option" type="button" data-correct="${answer.correct}">
+        <button class="quiz-option" type="button" data-correct="${answer.correct}" aria-pressed="false">
           ${index + 1}. ${answer.label}
         </button>
       `,

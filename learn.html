@@ -106,8 +106,10 @@
           <article class="content-card quiz-card">
             <span class="content-tag">Quiz</span>
             <h3>Which action usually saves the most emissions?</h3>
-            <div class="quiz-options" id="quizOptions"></div>
-            <p class="quiz-result" id="quizResult">Pick an option to test your intuition.</p>
+            <div class="quiz-options" id="quizOptions" role="group" aria-label="Climate quiz answers"></div>
+            <p class="quiz-result" id="quizResult" aria-live="polite" aria-atomic="true">
+              Pick an option to test your intuition.
+            </p>
           </article>
         </div>
       </section>
