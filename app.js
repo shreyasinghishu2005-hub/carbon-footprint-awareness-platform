@@ -138,6 +138,16 @@ function ensureNavigationMarkup() {
     topbar.insertBefore(navToggle, topnav);
   }
 
+  if (!document.querySelector(".nav-drawer__title")) {
+    const navTitle = document.createElement("div");
+    navTitle.className = "nav-drawer__title";
+    navTitle.innerHTML = `
+      <strong>Menu</strong>
+      <span>Open a section</span>
+    `;
+    topnav.prepend(navTitle);
+  }
+
   if (!document.getElementById("navOverlay")) {
     const navOverlay = document.createElement("button");
     navOverlay.id = "navOverlay";
