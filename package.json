@@ -4,7 +4,8 @@
   "private": true,
   "description": "A carbon footprint awareness platform with live calculator, dashboard, goals, and reports.",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "test": "node scripts/verify.mjs"
   },
   "engines": {
     "node": ">=18"

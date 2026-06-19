@@ -41,6 +41,14 @@ yarn start
 
 The app listens on `PORT` when deployed, which matches Render's default web service setup.
 
+## Verify
+
+```bash
+yarn test
+```
+
+This checks the shared page structure, navigation, and accessibility hooks.
+
 ## Notes
 
 The calculator uses approximate emissions factors for demonstration and education.

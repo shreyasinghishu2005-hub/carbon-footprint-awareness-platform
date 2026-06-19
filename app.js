@@ -113,8 +113,27 @@ const QUIZ = {
 };
 
 function ensureNavigationMarkup() {
+  const main = document.querySelector("main");
   const topbar = document.querySelector(".topbar");
   const topnav = document.querySelector(".topnav");
+
+  if (main) {
+    main.id = main.id || "mainContent";
+    main.setAttribute("tabindex", "-1");
+  }
+
+  if (main && !document.querySelector(".skip-link")) {
+    const skipLink = document.createElement("a");
+    skipLink.className = "skip-link";
+    skipLink.href = "#mainContent";
+    skipLink.textContent = "Skip to main content";
+    skipLink.addEventListener("click", () => {
+      window.setTimeout(() => {
+        main.focus();
+      }, 0);
+    });
+    document.body.prepend(skipLink);
+  }
 
   if (!topbar || !topnav) {
     return;
@@ -162,6 +181,8 @@ function ensureNavigationMarkup() {
     saveSnapshot.classList.add("topnav__action");
     topnav.appendChild(saveSnapshot);
   }
+
+  markActiveNavLink(topnav);
 }
 
 ensureNavigationMarkup();
@@ -216,6 +237,26 @@ const state = {
 };
 
 let toastTimer = null;
+
+function markActiveNavLink(topnav) {
+  if (!topnav) {
+    return;
+  }
+
+  const currentPage = window.location.pathname.split("/").pop() || "home.html";
+  const normalizedCurrent = currentPage === "index.html" || currentPage === "" ? "home.html" : currentPage;
+
+  topnav.querySelectorAll("a").forEach((link) => {
+    const href = link.getAttribute("href")?.split("?")[0];
+    const isActive = href === normalizedCurrent;
+    link.classList.toggle("is-active", isActive);
+    if (isActive) {
+      link.setAttribute("aria-current", "page");
+    } else {
+      link.removeAttribute("aria-current");
+    }
+  });
+}
 
 const inputConfig = {
   carKm: { unit: "km/week" },
@@ -1276,6 +1317,17 @@ function setMobileNavOpen(isOpen) {
   }
   refs.navToggle.setAttribute("aria-expanded", String(isOpen));
   refs.navToggle.setAttribute("aria-label", isOpen ? "Close menu" : "Open menu");
+
+  if (isOpen) {
+    const firstFocusable = refs.topnav.querySelector("a,button");
+    if (firstFocusable) {
+      window.setTimeout(() => {
+        firstFocusable.focus();
+      }, 0);
+    }
+  } else {
+    refs.navToggle.focus();
+  }
 }
 
 function attachEvents() {

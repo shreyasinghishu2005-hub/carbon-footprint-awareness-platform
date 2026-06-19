@@ -64,6 +64,25 @@ a {
   text-decoration: none;
 }
 
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: 1rem;
+  z-index: 40;
+  padding: 0.75rem 1rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+  color: #06111a;
+  font-weight: 700;
+  transform: translateY(-160%);
+  transition: transform 0.2s ease;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+  outline: none;
+}
+
 button,
 input {
   font: inherit;
@@ -186,6 +205,11 @@ button {
 }
 
 .topnav a.is-active {
+  background: rgba(255, 255, 255, 0.09);
+  color: var(--text);
+}
+
+.topnav a[aria-current="page"] {
   background: rgba(255, 255, 255, 0.09);
   color: var(--text);
 }
@@ -1486,4 +1510,19 @@ footer {
 
 body.nav-open {
   overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
