@@ -7,9 +7,11 @@ import {
   calculateFootprint,
   buildAssistant,
   buildAlerts,
+  buildLocations,
   buildGoals,
   buildRecommendations,
   formatCategory,
+  getPersonaProfile,
 } from "../engine.mjs";
 
 test("calculateFootprint returns a valid result", () => {
@@ -53,4 +55,15 @@ test("alerts and categories stay readable", () => {
   assert.ok(PERSONAS[DEFAULT_PERSONA]);
   assert.ok(buildGoals(DEFAULT_INPUTS, DEFAULT_PERSONA).every((goal) => goal.progress >= 0 && goal.progress <= 100));
   assert.ok(buildRecommendations(DEFAULT_INPUTS, result.breakdown, DEFAULT_PERSONA).every((item) => item.savings >= 0));
+});
+
+test("persona lookup falls back cleanly and location hints stay complete", () => {
+  const fallbackProfile = getPersonaProfile("not-a-real-persona");
+  const foodLocations = buildLocations({ biggestCategory: "food" });
+  const fallbackLocations = buildLocations({ biggestCategory: "unknown" });
+
+  assert.equal(fallbackProfile.label, PERSONAS[DEFAULT_PERSONA].label);
+  assert.equal(foodLocations.length, 3);
+  assert.equal(fallbackLocations[0].title, "EV charging hub");
+  assert.ok(Object.values(PERSONAS).every((profile) => profile.bullets.length === 3));
 });

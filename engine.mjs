@@ -199,7 +199,7 @@ export function formatCategory(category) {
   }
 }
 
-function getPersonaProfile(persona) {
+export function getPersonaProfile(persona) {
   return PERSONAS[persona] || PERSONAS[DEFAULT_PERSONA];
 }
 
